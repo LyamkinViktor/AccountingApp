@@ -3,6 +3,7 @@
 use app\models\Category;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -15,19 +16,14 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
 
-    <div class="input-wrap">
-        <div class="clearfix" id="UserLogin-gender">
-            <label class="radio-head">Operation type</label>
-            <?=
-            $form->field($model, 'type')
-                ->radioList([1 => 'income', 0 => 'expense'])
-                ->label(false);
-            ?>
-        </div>
-        <div class="help-block"></div>
-    </div>
+    <?= $form->field($model, 'created_at')->widget(DatePicker::class, [
+        'dateFormat' => 'yyyy-MM-dd',
+    ])->label('Date') ?>
+
+    <?= $form->field($model, 'type')->radioList([1 => 'income', 0 => 'expense'])->label('Select type') ?>
+
     <?= $form->field($model, 'amount')->textInput() ?>
-    <?= $form->field($model, 'created_at')->label('Date') ?>
+
     <?php
         $categories = Category::find()->all();
         $items = ArrayHelper::map($categories, 'id', 'name');

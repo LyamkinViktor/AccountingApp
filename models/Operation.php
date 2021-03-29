@@ -58,6 +58,7 @@ class Operation extends ActiveRecord
     public function rules():array
     {
         return [
+            [['amount', 'category_id'], 'required'],
             [['amount'], 'number'],
             [['created_at'], 'safe'],
             [['user_id', 'category_id', 'type'], 'integer'],

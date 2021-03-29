@@ -69,6 +69,7 @@ class OperationController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+        $model->type = 1;
 
         return $this->render('create', [
             'model' => $model,
