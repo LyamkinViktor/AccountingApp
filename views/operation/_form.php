@@ -20,13 +20,14 @@ use yii\widgets\ActiveForm;
             <label class="radio-head">Operation type</label>
             <?=
             $form->field($model, 'type')
-                ->radioList([1 => 'income', 0 => 'consumption'])
+                ->radioList([1 => 'income', 0 => 'expense'])
                 ->label(false);
             ?>
         </div>
         <div class="help-block"></div>
     </div>
     <?= $form->field($model, 'amount')->textInput() ?>
+    <?= $form->field($model, 'created_at')->label('Date') ?>
     <?php
         $categories = Category::find()->all();
         $items = ArrayHelper::map($categories, 'id', 'name');

@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'created_at', 'format' => ['date', 'php:d.m.Y']],
             ['attribute' => 'category_id', 'label' => 'Category', 'value' => 'category.name'],
             ['attribute' => 'type', 'label' => 'Type', 'value' => function ($model) {
-                return $model->type ? 'income' : 'consumption';
+                return $model->type ? 'income' : 'expense';
             }, ],
 
             ['class' => ActionColumn::class],
