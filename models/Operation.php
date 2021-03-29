@@ -101,4 +101,20 @@ class Operation extends ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    /**
+     * Gets operations for the specified time period.
+     *
+     * @param string $startDate
+     * @param string $endDate
+     *
+     * @return array|ActiveRecord[]
+     */
+    public static function getOperationsByPeriod(string $startDate, string $endDate):array
+    {
+        return self::find()
+            ->andWhere(['>=', self::tableName().'.created_at', $startDate])
+            ->andWhere(['<=', self::tableName().'.created_at', $endDate])
+            ->all();
+    }
 }

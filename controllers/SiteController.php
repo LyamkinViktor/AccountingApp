@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\Balance;
 use app\models\SignupForm;
 use Yii;
+use yii\base\DynamicModel;
 use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -84,9 +86,26 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex():string
     {
-        return $this->render('index');
+        $balance = new Balance();
+        $currentBalance = $balance->getBalanceByPeriod(null, null);
+
+        $model = new DynamicModel(['startDate', 'endDate']);
+        $model->addRule(['startDate', 'endDate'], 'string', ['max' => 128])
+            ->validate();
+        if ($model->validate() && $model->load(Yii::$app->request->post())) {
+            $modelAttributes = $model->getAttributes();
+            $currentBalance = $balance->getBalanceByPeriod(
+                $modelAttributes['startDate'],
+                $modelAttributes['endDate']
+            );
+        }
+
+        return $this->render('index', [
+            'currentBalance' => $currentBalance,
+            'model' => $model,
+        ]);
     }
 
     /**
