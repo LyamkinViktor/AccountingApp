@@ -16,6 +16,7 @@ use yii\db\Expression;
  * @property string|null $created_at
  * @property int|null $user_id
  * @property int|null $category_id
+ * @property int $type
  *
  * @property Category $category
  * @property User $user
@@ -59,7 +60,7 @@ class Operation extends ActiveRecord
         return [
             [['amount'], 'number'],
             [['created_at'], 'safe'],
-            [['user_id', 'category_id'], 'integer'],
+            [['user_id', 'category_id', 'type'], 'integer'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -76,6 +77,7 @@ class Operation extends ActiveRecord
             'created_at' => 'Created At',
             'user_id' => 'User ID',
             'category_id' => 'Category ID',
+            'type' => 'Type',
         ];
     }
 

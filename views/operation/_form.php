@@ -14,6 +14,18 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+
+    <div class="input-wrap">
+        <div class="clearfix" id="UserLogin-gender">
+            <label class="radio-head">Operation type</label>
+            <?=
+            $form->field($model, 'type')
+                ->radioList([1 => 'income', 0 => 'consumption'])
+                ->label(false);
+            ?>
+        </div>
+        <div class="help-block"></div>
+    </div>
     <?= $form->field($model, 'amount')->textInput() ?>
     <?php
         $categories = Category::find()->all();

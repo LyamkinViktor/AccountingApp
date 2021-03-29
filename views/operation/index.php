@@ -5,6 +5,7 @@ use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\OperationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -29,9 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => SerialColumn::class],
 
-            ['attribute' => 'amount', 'contentOptions' => ['style' => 'background: #d1eeff;']],
+            ['attribute' => 'amount',
+             'contentOptions' => function ($model) {
+                return ['style' => $model->type ? 'background:#d1eeff' : 'background:#ffb3b3'];
+             },
+            ],
             ['attribute' => 'created_at', 'format' => ['date', 'php:d.m.Y']],
             ['attribute' => 'category_id', 'label' => 'Category', 'value' => 'category.name'],
+            ['attribute' => 'type', 'label' => 'Type', 'value' => function ($model) {
+                return $model->type ? 'income' : 'consumption';
+            }, ],
 
             ['class' => ActionColumn::class],
         ],
