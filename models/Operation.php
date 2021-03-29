@@ -2,8 +2,11 @@
 
 namespace app\models;
 
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "operation".
@@ -25,6 +28,27 @@ class Operation extends ActiveRecord
     public static function tableName():string
     {
         return 'operation';
+    }
+
+    /**
+     * @return array
+     */
+    public function behaviors():array
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'updatedAtAttribute' => false,
+                'value' => function () {
+                    return new Expression('NOW()');
+                },
+            ],
+            [
+                'class' => BlameableBehavior::class,
+                'updatedByAttribute' => false,
+                'createdByAttribute' => 'user_id',
+            ],
+        ];
     }
 
     /**
